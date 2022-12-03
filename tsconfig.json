@@ -16,11 +16,12 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/pages/*": ["pages/*"],
+      "@/atoms/*": ["atoms/*"],
       "@/components/*": ["components/*"],
-      "@/styles/*": ["styles/*"],
-      "@/libs/*": ["libs/*"],
       "@/constants/*": ["constants/*"],
+      "@/libs/*": ["libs/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"],
       "@/types/*": ["types/*"]
     }
   },

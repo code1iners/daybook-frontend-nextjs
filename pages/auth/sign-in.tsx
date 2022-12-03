@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
+import { accessTokenState } from "@/atoms/auth";
 import { axiosClient } from "@/libs/clients/axios";
 import { isEmailValid, isPasswordValid } from "@/libs/clients/validators";
 import { setAccessTokenIntoSession } from "@/libs/clients/storage-helpers";
+import { useProtect } from "@/libs/clients/use-protect";
+import { Environments } from "constants/environments";
 import HorizontalSimpleButton from "@/components/horizontal-simple-button";
 import Input from "@/components/input";
-import { Environments } from "constants/environments";
-import { accessTokenState } from "atoms/auth";
 
 interface SignInForm {
   email: string;
@@ -22,6 +23,7 @@ export default function SignIn() {
     formState: { errors },
   } = useForm<SignInForm>();
   const setAccessToken = useSetRecoilState(accessTokenState);
+  useProtect();
 
   const onSubmit = async (form: SignInForm) => {
     try {

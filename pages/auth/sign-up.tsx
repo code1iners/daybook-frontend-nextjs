@@ -1,10 +1,11 @@
-import HorizontalSimpleButton from "@/components/horizontal-simple-button";
-import Input from "@/components/input";
-import { axiosClient } from "@/libs/clients/axios";
-import { isEmailValid, isPasswordValid } from "@/libs/clients/validators";
-import { Environments } from "constants/environments";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { axiosClient } from "@/libs/clients/axios";
+import { useProtect } from "@/libs/clients/use-protect";
+import { isEmailValid, isPasswordValid } from "@/libs/clients/validators";
+import { Environments } from "constants/environments";
+import HorizontalSimpleButton from "@/components/horizontal-simple-button";
+import Input from "@/components/input";
 
 export interface SignUpForm {
   email: string;
@@ -15,6 +16,8 @@ export interface SignUpForm {
 }
 
 export default function SignUp() {
+  useProtect();
+
   const router = useRouter();
   const {
     register,
