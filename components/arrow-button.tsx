@@ -6,12 +6,14 @@ export type ArrowSize = "sm" | "md" | "lg";
 interface ArrowButtonProps {
   direction?: ArrowDirection;
   size?: ArrowSize;
+  classNames?: string;
   onClick?: () => void;
 }
 
 export default function ArrowButton({
   direction = "left",
   size = "md",
+  classNames,
   onClick,
 }: ArrowButtonProps) {
   const makeDirectionClassName = () => {
@@ -39,7 +41,7 @@ export default function ArrowButton({
   };
 
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} className={clazz(classNames ?? "")}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

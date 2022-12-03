@@ -1,15 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
 import { makeCalendar } from "@ce1pers/date-helpers";
 import { clazz } from "@ce1pers/use-class";
-import { ApiResponse, CoreResponse } from "./_app";
+import type { CalendarDateItem } from "@ce1pers/date-helpers/dist/src/calendar-helpers/types";
 import Loading from "@/components/loading";
-import { useRouter } from "next/router";
-import { clearAccessTokenFromSession } from "@/libs/clients/storage-helpers";
-import { useSetRecoilState } from "recoil";
-import { accessTokenState } from "atoms/auth";
-import { CalendarDateItem } from "@ce1pers/date-helpers/dist/src/calendar-helpers/types";
 import ArrowButton from "@/components/arrow-button";
+import { useFetcher } from "@/libs/clients/use-fetch";
 
 export interface MergedCalendar {
   client: CalendarDateItem;
@@ -29,30 +24,31 @@ export interface RetrieveDiaries {
 
 export default function Home() {
   const now = new Date();
-  const router = useRouter();
-  const setAccessToken = useSetRecoilState(accessTokenState);
 
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [calendar, setCalendar] = useState<MergedCalendar[]>([]);
 
-  const { data, isValidating } = useSWR<CoreResponse<RetrieveDiaries>>([
-    `api/v1/diaries?year=${year}&month=${String(month).padStart(2, "0")}`,
-  ]);
+  const { data, isValidating } = useFetcher<RetrieveDiaries>({
+    url: `api/v1/diaries?year=${year}&month=${String(month).padStart(2, "0")}`,
+  });
+
   const memoizedCalendar = useMemo(
     () => makeCalendar(year, month),
     [year, month]
   );
 
   const isCurrentMonth = (__month__: number) => __month__ === month;
+  const isNotHasNextMonth = (__year__: number, __month__: number) => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const limit = new Date(`${year}-12-31`);
+
+    const target = new Date(`${__year__}-${__month__}-31`);
+    return limit.getTime() <= target.getTime();
+  };
 
   useEffect(() => {
-    if (data?.status === 403) {
-      clearAccessTokenFromSession();
-      setAccessToken(undefined);
-      router.replace("/auth/sign-in");
-    }
-
     if (data?.data.ok) {
       const { diaries } = data.data.data;
       if (Array.isArray(diaries)) {
@@ -87,12 +83,19 @@ export default function Home() {
 
   return (
     <article className="p-10 h-full flex flex-col space-y-10">
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex items-center justify-center gap-3 select-none">
         <ArrowButton onClick={onLeftClick} size="sm" />
         <h2>
           {year} 년 {month} 월
         </h2>
-        <ArrowButton onClick={onRightClick} direction="right" size="sm" />
+        <ArrowButton
+          onClick={onRightClick}
+          direction="right"
+          size="sm"
+          classNames={
+            isNotHasNextMonth(year, month) ? "invisible cursor-default" : ""
+          }
+        />
       </div>
       <ul className="grid grid-cols-7 gap-2 h-full">
         {calendar.map((date) => (
