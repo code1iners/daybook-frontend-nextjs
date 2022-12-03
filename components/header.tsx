@@ -34,11 +34,11 @@ export default function Header() {
   useEffect(() => {
     setMetaHref(`${window.origin}${router.route}`);
     setMetaLanguage(navigator.language);
-    setMetaTitle(Meta[router.route].title ?? "Daybook");
+    setMetaTitle(Meta[router.route]?.title ?? "Daybook");
     setMetaDescription(
-      Meta[router.route].description ?? "간단한 일기 애플리케이션."
+      Meta[router.route]?.description ?? "간단한 일기 애플리케이션."
     );
-  }, [router.route]);
+  }, [router.asPath]);
 
   // Handlers.
   const onLogoClick = () => {
