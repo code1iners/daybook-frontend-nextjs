@@ -62,7 +62,7 @@ export default function Home() {
         setCalendar(parsedCalendar);
       }
     }
-  }, [data]);
+  }, [data, memoizedCalendar, month]);
 
   // Handler.
   const onDateClick = (date: MergedCalendar) => {

@@ -29,7 +29,7 @@ export default function Header() {
       const accessToken = getAccessTokenFromSession();
       if (accessToken) setAccessToken("accessToken");
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, setAccessToken]);
 
   useEffect(() => {
     setMetaHref(`${window.origin}${router.route}`);
@@ -38,7 +38,7 @@ export default function Header() {
     setMetaDescription(
       Meta[router.route]?.description ?? "간단한 일기 애플리케이션."
     );
-  }, [router.asPath]);
+  }, [router.route]);
 
   // Handlers.
   const onLogoClick = () => {
