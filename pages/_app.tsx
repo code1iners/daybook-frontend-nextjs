@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { RecoilRoot, useRecoilState } from "recoil";
+import { RecoilRoot } from "recoil";
 import { AxiosHeaders } from "axios";
 import { SWRConfig } from "swr";
 import { axiosClient } from "@/libs/clients/axios";

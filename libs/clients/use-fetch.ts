@@ -16,12 +16,16 @@ export const useFetcher = <T>({ url }: UseFetcherInputs) => {
   const { data, error, isValidating, mutate } = useSWR<CoreResponse<T>>([url]);
 
   useEffect(() => {
-    if (data?.status === 403) {
+    if (!isValidating && data && !data?.data.ok && data.status !== 403) {
+      router.replace("/invalid");
+    }
+
+    if (!isValidating && data?.status === 403) {
       clearAccessTokenFromSession();
       setAccessToken(undefined);
       router.replace("/auth/sign-in");
     }
-  }, [data]);
+  }, [data, isValidating]);
 
   return { data, error, isValidating, mutate };
 };

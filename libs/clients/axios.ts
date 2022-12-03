@@ -25,6 +25,7 @@ axiosClient.interceptors.request.use(
     }
   },
   (error) => {
+    console.error("request");
     return error;
   }
 );
@@ -37,9 +38,19 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    error.response.data = {
-      ok: false,
-    };
-    return error.response;
+    const __error__ = { ...error };
+
+    if ("response" in error) {
+      __error__.response.data = {
+        ok: false,
+        message: __error__.response.data.message || __error__.message,
+      };
+    } else {
+      __error__.response = {
+        data: { ok: false, message: __error__.message },
+      };
+    }
+
+    return __error__.response;
   }
 );

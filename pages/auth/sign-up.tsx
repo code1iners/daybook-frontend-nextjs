@@ -46,9 +46,9 @@ export default function SignUp() {
   };
 
   return (
-    <article className="p-10">
+    <article className="p-10 flex flex-col items-center">
       <form
-        className="flex flex-col space-y-3"
+        className="w-full sm:w-2/3 md:w-1/2 lg:w-2/5 flex flex-col space-y-3"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-2">
