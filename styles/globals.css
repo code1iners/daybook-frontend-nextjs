@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer components {
+  .overlay {
+    @apply w-full absolute z-50 top-0 bottom-0 bg-black opacity-30;
+  }
+  .screen-center {
+    @apply w-full absolute top-0 bottom-0 flex justify-center items-center;
+  }
+
   .error-text {
     @apply text-red-500 text-sm;
   }

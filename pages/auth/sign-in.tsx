@@ -1,10 +1,13 @@
-import HorizontalSimpleButton from "@/components/horizontal-simple-button";
-import Input from "@/components/input";
-import { axiosClient } from "@/libs/clients/axios";
-import { isEmailValid, isPasswordValid } from "@/libs/clients/validators";
-import { Environments } from "constants/environments";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { useSetRecoilState } from "recoil";
+import { axiosClient } from "@/libs/clients/axios";
+import { isEmailValid, isPasswordValid } from "@/libs/clients/validators";
+import { setAccessTokenIntoSession } from "@/libs/clients/storage-helpers";
+import HorizontalSimpleButton from "@/components/horizontal-simple-button";
+import Input from "@/components/input";
+import { Environments } from "constants/environments";
+import { accessTokenState } from "atoms/auth";
 
 interface SignInForm {
   email: string;
@@ -18,6 +21,7 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInForm>();
+  const setAccessToken = useSetRecoilState(accessTokenState);
 
   const onSubmit = async (form: SignInForm) => {
     try {
@@ -27,6 +31,13 @@ export default function SignIn() {
       );
 
       if (data.code !== 200) return alert(data.message);
+
+      // Store access token into session storage.
+      if (!data.data.token) return alert("토큰을 찾을 수 없습니다.");
+
+      setAccessTokenIntoSession(data.data.token);
+
+      setAccessToken(data.data.token);
 
       router.replace("/");
     } catch (error) {

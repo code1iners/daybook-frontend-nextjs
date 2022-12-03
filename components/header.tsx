@@ -1,8 +1,30 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  clearAccessTokenFromSession,
+  getAccessTokenFromSession,
+} from "@/libs/clients/storage-helpers";
+import { accessTokenState, isLoggedInState } from "atoms/auth";
+import { useEffect } from "react";
 
 export default function Header() {
   const router = useRouter();
+  const isLoggedIn = useRecoilValue(isLoggedInState);
+  const setAccessToken = useSetRecoilState(accessTokenState);
+
+  const onSignOutClick = () => {
+    clearAccessTokenFromSession();
+    setAccessToken(undefined);
+    router.replace("/auth/sign-in");
+  };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      const accessToken = getAccessTokenFromSession();
+      if (accessToken) setAccessToken("accessToken");
+    }
+  }, [isLoggedIn]);
 
   return (
     <header>
@@ -17,19 +39,29 @@ export default function Header() {
           Daybook
         </h1>
 
-        <ul className="flex items-center gap-3 capitalize">
-          <li
-            className="cursor-pointer"
-            onClick={() => router.push("/auth/sign-in")}
-          >
-            sign in
-          </li>
-          <li
-            className="cursor-pointer"
-            onClick={() => router.push("/auth/sign-up")}
-          >
-            sign up
-          </li>
+        <ul className="flex items-center gap-3 capitalize text-sm">
+          {isLoggedIn ? (
+            <>
+              <li className="cursor-pointer" onClick={onSignOutClick}>
+                로그아웃
+              </li>
+            </>
+          ) : (
+            <>
+              <li
+                className="cursor-pointer"
+                onClick={() => router.push("/auth/sign-in")}
+              >
+                로그인
+              </li>
+              <li
+                className="cursor-pointer"
+                onClick={() => router.push("/auth/sign-up")}
+              >
+                회원가입
+              </li>
+            </>
+          )}
         </ul>
       </section>
     </header>
