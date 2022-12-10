@@ -42,11 +42,9 @@ export default function SignUp() {
         }
       );
 
-      if (data.code !== 201) return alert(data.message);
+      if (data.code !== 200) return alert(data.message);
 
-      router.push(`/auth/sign-in?id=${form.email}`);
-
-      // alert("회원가입이 정상적으로 처리되었습니다.");
+      router.replace(`/auth/sign-in?id=${form.email}`);
     } catch (error) {
       console.error(error);
     }
