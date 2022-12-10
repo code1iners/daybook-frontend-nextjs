@@ -10,6 +10,7 @@ import {
 import { Environments } from "constants/environments";
 import HorizontalSimpleButton from "@/components/horizontal-simple-button";
 import Input from "@/components/input";
+import { createNotification } from "@/libs/clients/notification-helpers";
 
 export interface SignUpForm {
   email: string;
@@ -42,14 +43,15 @@ export default function SignUp() {
         }
       );
 
-      if (data.code !== 200) return alert(data.message);
+      if (data.code !== 200) return createNotification(data.message);
+
+      createNotification("회원가입이 정상적으로 처리되었습니다.");
 
       router.replace(`/auth/sign-in?id=${form.email}`);
     } catch (error) {
       console.error(error);
     }
   };
-  console.log(errors.birthdate);
 
   return (
     <article className="p-10 flex flex-col items-center">

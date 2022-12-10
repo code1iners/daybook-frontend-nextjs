@@ -139,7 +139,6 @@ export default function Home() {
               className={clazz(
                 "w-full h-full text-center flex flex-col items-center justify-between gap-1 cursor-pointer border rounded-md shadow-md divide-y transition hover:scale-105 hover:border-indigo-300",
                 isCurrentMonth(date.client.month) ? "" : "text-gray-400",
-
                 date.client.day.index === 0 ? "text-red-500" : "",
                 date.client.day.index === 6 ? "text-blue-500" : "",
                 date.client.isToday ? "border-indigo-500" : ""

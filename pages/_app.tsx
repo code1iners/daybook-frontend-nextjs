@@ -7,6 +7,7 @@ import "@/styles/globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Body from "@/components/body";
+import useNotification from "@/libs/clients/notification-helpers";
 
 export interface ApiResponse<T> {
   ok: boolean;
@@ -25,6 +26,8 @@ export interface CoreResponse<T> {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
+  useNotification();
+
   return (
     <RecoilRoot>
       <SWRConfig

@@ -9,6 +9,7 @@ import { useProtect } from "@/libs/clients/use-protect";
 import { Environments } from "constants/environments";
 import HorizontalSimpleButton from "@/components/horizontal-simple-button";
 import Input from "@/components/input";
+import { createNotification } from "@/libs/clients/notification-helpers";
 
 interface SignInForm {
   email: string;
@@ -32,10 +33,11 @@ export default function SignIn() {
         form
       );
 
-      if (data.code !== 200) return alert(data.message);
+      if (data.code !== 200) return createNotification(data.message);
 
       // Store access token into session storage.
-      if (!data.data.token) return alert("토큰을 찾을 수 없습니다.");
+      if (!data.data.token)
+        return createNotification("토큰을 찾을 수 없습니다.");
 
       setAccessTokenIntoSession(data.data.token);
 
@@ -61,7 +63,12 @@ export default function SignIn() {
             required: "이메일을 입력해주세요.",
             validate: { isEmailValid },
           })}
-          errors={[errors.email?.message ?? ""]}
+          errors={[
+            errors.email?.message ?? "",
+            errors.email?.type === "isEmailValid"
+              ? "이메일 형식이 올바르지 않습니다."
+              : "",
+          ]}
         >
           <label className="input-label" htmlFor="input-email">
             email
@@ -76,7 +83,12 @@ export default function SignIn() {
             required: "암호를 입력해주세요.",
             validate: { isPasswordValid },
           })}
-          errors={[errors.password?.message ?? ""]}
+          errors={[
+            errors.password?.message ?? "",
+            errors.password?.type === "isPasswordValid"
+              ? "암호는 최소 8자리, 숫자, 대/소문자, 특수문자가 포함되어야 합니다."
+              : "",
+          ]}
         >
           <label className="input-label" htmlFor="input-password">
             password
