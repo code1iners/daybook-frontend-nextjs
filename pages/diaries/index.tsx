@@ -132,7 +132,7 @@ export default function Home() {
         </ul>
 
         {/* Calendar body */}
-        <ul className="grid grid-cols-2 gap-2 h-full sm:grid-cols-7 mt-5 overflow-hidden">
+        <ul className="grid grid-cols-2 gap-2 h-full sm:grid-cols-7 mt-5">
           {calendar.map((date) => (
             <li
               key={date.client.key}
