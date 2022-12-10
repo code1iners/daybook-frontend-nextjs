@@ -13,4 +13,8 @@
   .error-text {
     @apply text-red-500 text-sm;
   }
+
+  .input-label {
+    @apply text-sm text-gray-500 tracking-wider capitalize;
+  }
 }

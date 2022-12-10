@@ -25,22 +25,28 @@ export type InputType =
   | "week";
 
 interface InputProps {
+  htmlId?: string;
   register: UseFormRegisterReturn;
   type?: InputType;
   placeholder?: string;
   errors?: string[];
+  children?: React.ReactNode;
 }
 
 export default function Input({
+  htmlId,
   register,
   type = "text",
   placeholder = "입력창",
   errors,
+  children,
 }: InputProps) {
   return (
     <div className="flex flex-col gap-2">
+      {children}
       {/* Input */}
       <input
+        id={htmlId}
         className="border p-2 rounded-md"
         type={type}
         placeholder={placeholder}

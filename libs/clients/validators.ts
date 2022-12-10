@@ -3,3 +3,5 @@ export const isPasswordValid = (text: string) =>
 
 export const isEmailValid = (text: string) =>
   /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi.test(text);
+
+export const isFuture = (text: string) => new Date(text).getTime() < Date.now();

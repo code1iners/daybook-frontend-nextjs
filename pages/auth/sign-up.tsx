@@ -2,7 +2,11 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { axiosClient } from "@/libs/clients/axios";
 import { useProtect } from "@/libs/clients/use-protect";
-import { isEmailValid, isPasswordValid } from "@/libs/clients/validators";
+import {
+  isEmailValid,
+  isPasswordValid,
+  isFuture,
+} from "@/libs/clients/validators";
 import { Environments } from "constants/environments";
 import HorizontalSimpleButton from "@/components/horizontal-simple-button";
 import Input from "@/components/input";
@@ -12,7 +16,7 @@ export interface SignUpForm {
   name: string;
   password: string;
   confirmPassword: string;
-  birthday: string;
+  birthdate: string;
 }
 
 export default function SignUp() {
@@ -34,7 +38,7 @@ export default function SignUp() {
           email: form.email,
           name: form.name,
           password: form.password,
-          birthday: form.birthday,
+          birthdate: form.birthdate,
         }
       );
 
@@ -47,6 +51,7 @@ export default function SignUp() {
       console.error(error);
     }
   };
+  console.log(errors.birthdate);
 
   return (
     <article className="p-10 flex flex-col items-center">
@@ -56,10 +61,11 @@ export default function SignUp() {
       >
         <div className="flex flex-col gap-2">
           <Input
+            htmlId="input-email"
             type="email"
-            placeholder="아이디를 입력해주세요."
+            placeholder="이메일를 입력해주세요."
             register={register("email", {
-              required: "아이디를 입력해주세요.",
+              required: "이메일를 입력해주세요.",
               validate: { isEmailValid },
             })}
             errors={[
@@ -68,22 +74,32 @@ export default function SignUp() {
                 ? "이메일 형식이 올바르지 않습니다."
                 : "",
             ]}
-          />
+          >
+            <label className="input-label" htmlFor="input-email">
+              email
+            </label>
+          </Input>
         </div>
 
         <div className="flex flex-col gap-2">
           <Input
+            htmlId="input-name"
             type="text"
             placeholder="이름을 입력해주세요."
             register={register("name", {
               required: "이름을 입력해주세요.",
             })}
             errors={[errors.name?.message ?? ""]}
-          />
+          >
+            <label className="input-label" htmlFor="input-name">
+              name
+            </label>
+          </Input>
         </div>
 
         <div className="flex flex-col gap-2">
           <Input
+            htmlId="input-password"
             type="password"
             placeholder="암호를 입력해주세요."
             register={register("password", {
@@ -96,11 +112,16 @@ export default function SignUp() {
                 ? "암호는 최소 8자리, 숫자, 대/소문자, 특수문자가 포함되어야 합니다."
                 : "",
             ]}
-          />
+          >
+            <label className="input-label" htmlFor="input-password">
+              password
+            </label>
+          </Input>
         </div>
 
         <div className="flex flex-col gap-2">
           <Input
+            htmlId="input-confirm-password"
             type="password"
             placeholder="암호 확인을 입력해주세요."
             register={register("confirmPassword", {
@@ -111,18 +132,35 @@ export default function SignUp() {
               },
             })}
             errors={[errors.confirmPassword?.message ?? ""]}
-          />
+          >
+            <label className="input-label" htmlFor="input-confirm-password">
+              confirm password
+            </label>
+          </Input>
         </div>
 
         <div className="flex flex-col gap-2">
           <Input
+            htmlId="input-birthdate"
             type="date"
-            placeholder="생일을 입력해주세요."
-            register={register("birthday", {
-              required: "생일을 입력해주세요.",
+            placeholder="생년월일을 입력해주세요."
+            register={register("birthdate", {
+              required: "생년월일을 입력해주세요.",
+              validate: {
+                isFuture,
+              },
             })}
-            errors={[errors.birthday?.message ?? ""]}
-          />
+            errors={[
+              errors.birthdate?.message ?? "",
+              errors.birthdate?.type === "isFuture"
+                ? "생년월일은 미래가 될 수 없습니다."
+                : "",
+            ]}
+          >
+            <label className="input-label" htmlFor="input-birthdate">
+              Birthday
+            </label>
+          </Input>
         </div>
 
         <HorizontalSimpleButton text="회원가입" />

@@ -54,16 +54,22 @@ export default function SignIn() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
-          type="text"
-          placeholder="아이디를 입력해주세요."
+          htmlId="input-email"
+          type="email"
+          placeholder="이메일을 입력해주세요."
           register={register("email", {
-            required: "아이디를 입력해주세요.",
+            required: "이메일을 입력해주세요.",
             validate: { isEmailValid },
           })}
           errors={[errors.email?.message ?? ""]}
-        />
+        >
+          <label className="input-label" htmlFor="input-email">
+            email
+          </label>
+        </Input>
 
         <Input
+          htmlId="input-password"
           type="password"
           placeholder="암호를 입력해주세요."
           register={register("password", {
@@ -71,7 +77,11 @@ export default function SignIn() {
             validate: { isPasswordValid },
           })}
           errors={[errors.password?.message ?? ""]}
-        />
+        >
+          <label className="input-label" htmlFor="input-password">
+            password
+          </label>
+        </Input>
 
         <HorizontalSimpleButton text="로그인" />
       </form>
