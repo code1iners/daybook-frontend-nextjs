@@ -13,7 +13,7 @@
   }
 
   .error-text {
-    @apply text-red-500 text-sm;
+    @apply text-red-500 text-xs;
   }
 
   .input-label {
