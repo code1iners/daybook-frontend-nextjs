@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
           fetcher: (url) => axiosClient.get(url),
         }}
       >
-        <div className="h-screen flex flex-col">
+        <div className="h-screen flex flex-col font-gamja">
           {/* Header */}
           <Header />
 

@@ -66,6 +66,7 @@ export default function Home() {
 
   // Handler.
   const onDateClick = (date: MergedCalendar) => {
+    if (!date.server?.day) return;
     router.push(`/diaries/${date.server?.day}`);
   };
 
@@ -91,7 +92,7 @@ export default function Home() {
     <article key={month} className="p-10 h-full flex flex-col space-y-10">
       <div className="flex items-center justify-center gap-3 select-none">
         <ArrowButton onClick={onLeftClick} size="sm" />
-        <h2>
+        <h2 className="text-lg">
           {year} 년 {month} 월
         </h2>
         <ArrowButton
@@ -103,20 +104,31 @@ export default function Home() {
           }
         />
       </div>
-      <ul className="grid grid-cols-7 gap-2 h-full">
+      <ul className="hidden sm:grid sm:grid-cols-7">
+        <li className="justify-self-center capitalize text-red-500">sun</li>
+        <li className="justify-self-center capitalize">mon</li>
+        <li className="justify-self-center capitalize">tue</li>
+        <li className="justify-self-center capitalize">wed</li>
+        <li className="justify-self-center capitalize">thu</li>
+        <li className="justify-self-center capitalize">fri</li>
+        <li className="justify-self-center capitalize text-blue-500">sat</li>
+      </ul>
+      <ul className="grid grid-cols-2 gap-2 h-full sm:grid-cols-7">
         {calendar.map((date) => (
           <li
             key={date.client.key}
             className={clazz(
               "w-full h-full text-center flex flex-col items-center justify-between gap-1 cursor-pointer border rounded-md shadow-md divide-y",
-              isCurrentMonth(date.client.month) ? "" : "text-gray-400"
+              isCurrentMonth(date.client.month) ? "" : "text-gray-400",
+
+              date.client.day.index === 0 ? "text-red-500" : "",
+              date.client.day.index === 6 ? "text-blue-500" : "",
+              date.client.isToday ? "border-indigo-500" : ""
             )}
             onClick={() => onDateClick(date)}
           >
-            <h2 className={clazz(date.client.isToday ? "" : "")}>
-              {date.client.date}
-            </h2>
-            <div className="grow w-full flex justify-center items-center">
+            <h2>{date.client.date}</h2>
+            <div className="grow w-full flex justify-center items-center py-3">
               {isCurrentMonth(date.client.month) ? (
                 <span className="underline underline-offset-4 text-sm">
                   {date.server?.count ?? "0"}

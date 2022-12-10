@@ -42,12 +42,12 @@ export default function Input({
   children,
 }: InputProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full">
       {children}
       {/* Input */}
       <input
         id={htmlId}
-        className="border p-2 rounded-md"
+        className="border p-2 rounded-md tracking-widest"
         type={type}
         placeholder={placeholder}
         {...register}
