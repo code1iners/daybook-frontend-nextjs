@@ -89,7 +89,7 @@ export default function Home() {
   if (isValidating) return <Loading />;
 
   return (
-    <article key={month} className="p-10 h-full flex flex-col space-y-10">
+    <article key={month} className="m-10 h-full flex flex-col space-y-10">
       <div className="flex items-center justify-center gap-3 select-none">
         <ArrowButton onClick={onLeftClick} size="sm" />
         <h2 className="text-lg">
@@ -132,7 +132,7 @@ export default function Home() {
         </ul>
 
         {/* Calendar body */}
-        <ul className="grid grid-cols-2 gap-2 h-full sm:grid-cols-7 mt-5">
+        <ul className="grid grid-cols-2 gap-2 h-full sm:grid-cols-7 mt-5 overflow-hidden">
           {calendar.map((date) => (
             <li
               key={date.client.key}
