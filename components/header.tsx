@@ -70,7 +70,7 @@ export default function Header() {
 
       <section className="flex justify-between p-3 border-b">
         <h1
-          className="select-none text-lg cursor-pointer font-semibold tracking-wider"
+          className="select-none text-lg cursor-pointer font-semibold tracking-wider transition hover:text-indigo-500 hover:scale-110 origin-left"
           onClick={onLogoClick}
         >
           Daybook
@@ -86,13 +86,13 @@ export default function Header() {
           ) : (
             <>
               <li
-                className="cursor-pointer"
+                className="cursor-pointer transition hover:text-indigo-500 hover:scale-110 origin-right"
                 onClick={() => router.push("/auth/sign-in")}
               >
                 로그인
               </li>
               <li
-                className="cursor-pointer"
+                className="cursor-pointer transition hover:text-indigo-500 hover:scale-110 origin-right"
                 onClick={() => router.push("/auth/sign-up")}
               >
                 회원가입

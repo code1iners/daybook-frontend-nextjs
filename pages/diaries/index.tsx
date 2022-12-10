@@ -104,6 +104,8 @@ export default function Home() {
           }
         />
       </div>
+
+      {/* Calendar header */}
       <ul className="hidden sm:grid sm:grid-cols-7">
         <li className="justify-self-center capitalize text-red-500">sun</li>
         <li className="justify-self-center capitalize">mon</li>
@@ -113,12 +115,14 @@ export default function Home() {
         <li className="justify-self-center capitalize">fri</li>
         <li className="justify-self-center capitalize text-blue-500">sat</li>
       </ul>
+
+      {/* Calendar body */}
       <ul className="grid grid-cols-2 gap-2 h-full sm:grid-cols-7">
         {calendar.map((date) => (
           <li
             key={date.client.key}
             className={clazz(
-              "w-full h-full text-center flex flex-col items-center justify-between gap-1 cursor-pointer border rounded-md shadow-md divide-y",
+              "w-full h-full text-center flex flex-col items-center justify-between gap-1 cursor-pointer border rounded-md shadow-md divide-y transition hover:scale-105 hover:border-indigo-300",
               isCurrentMonth(date.client.month) ? "" : "text-gray-400",
 
               date.client.day.index === 0 ? "text-red-500" : "",

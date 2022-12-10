@@ -17,6 +17,10 @@
   }
 
   .input-label {
-    @apply text-sm text-gray-500 tracking-wider capitalize;
+    @apply text-sm text-gray-500 tracking-wider capitalize transition hover:text-indigo-500 hover:scale-110 origin-left;
+  }
+
+  .hover-on {
+    @apply hover:bg-indigo-500 hover:text-white;
   }
 }

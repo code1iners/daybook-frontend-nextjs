@@ -41,7 +41,13 @@ export default function ArrowButton({
   };
 
   return (
-    <button onClick={onClick} className={clazz(classNames ?? "")}>
+    <button
+      onClick={onClick}
+      className={clazz(
+        classNames ?? "",
+        "transition hover:scale-110 hover:text-indigo-500"
+      )}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
