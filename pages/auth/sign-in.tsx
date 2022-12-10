@@ -10,6 +10,7 @@ import { Environments } from "constants/environments";
 import HorizontalSimpleButton from "@/components/horizontal-simple-button";
 import Input from "@/components/input";
 import { createNotification } from "@/libs/clients/notification-helpers";
+import { useEffect } from "react";
 
 interface SignInForm {
   email: string;
@@ -17,14 +18,16 @@ interface SignInForm {
 }
 
 export default function SignIn() {
+  useProtect();
   const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    setFocus,
   } = useForm<SignInForm>();
   const setAccessToken = useSetRecoilState(accessTokenState);
-  useProtect();
 
   const onSubmit = async (form: SignInForm) => {
     try {
@@ -48,6 +51,13 @@ export default function SignIn() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (router.query.email) {
+      setValue("email", String(router.query.email));
+      setFocus("password");
+    }
+  }, [router, setValue]);
 
   return (
     <article className="p-10 flex flex-col items-center">

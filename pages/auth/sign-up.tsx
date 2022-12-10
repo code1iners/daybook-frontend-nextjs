@@ -47,7 +47,7 @@ export default function SignUp() {
 
       createNotification("회원가입이 정상적으로 처리되었습니다.");
 
-      router.replace(`/auth/sign-in?id=${form.email}`);
+      router.replace(`/auth/sign-in?email=${form.email}`);
     } catch (error) {
       console.error(error);
     }
