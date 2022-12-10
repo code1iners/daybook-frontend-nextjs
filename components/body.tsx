@@ -3,5 +3,5 @@ interface BodyProps {
 }
 
 export default function Body({ children }: BodyProps) {
-  return <main className="grow">{children}</main>;
+  return <main className="grow mt-[65px]">{children}</main>;
 }
