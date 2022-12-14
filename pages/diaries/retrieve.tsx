@@ -70,7 +70,10 @@ export default function RetrieveDiary() {
       {data?.data?.length ? (
         <ul className="w-full grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {data?.data.map((diary) => (
-            <li className="border rounded-md shadow-md whitespace-pre-line divide-y tracking-wider">
+            <li
+              key={diary.diaryId}
+              className="border rounded-md shadow-md whitespace-pre-line divide-y tracking-wider"
+            >
               <div className="px-5 py-2 flex items-center justify-between">
                 <small className="text-gray-500 text-xs transition-colors hover:text-indigo-500 cursor-default">
                   {convertTime(diary.registerDate)}

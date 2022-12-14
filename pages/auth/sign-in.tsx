@@ -57,7 +57,7 @@ export default function SignIn() {
       setValue("email", String(router.query.email));
       setFocus("password");
     }
-  }, [router, setValue]);
+  }, [router, setValue, setFocus]);
 
   return (
     <article className="p-10 flex flex-col items-center">
