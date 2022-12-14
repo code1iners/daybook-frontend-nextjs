@@ -74,10 +74,12 @@ export const createNotification = (text: string) => {
   notificationItem.style.transition = `all ${GAP_SECOND}s ease-in-out`;
   notificationItem.style.opacity = "0";
   notificationItem.style.padding = "10px 20px";
-  notificationItem.style.border = "1px solid black";
+  notificationItem.style.border = "1px solid #6366f1";
   notificationItem.style.borderRadius = "5px";
-  notificationItem.style.backgroundColor = "white";
+  notificationItem.style.backgroundColor = "#6366f1";
+  notificationItem.style.color = "white";
   notificationItem.style.fontSize = "0.9rem";
+  notificationItem.style.userSelect = "none";
   notificationItem.innerText = text;
 
   container.appendChild(notificationItem);

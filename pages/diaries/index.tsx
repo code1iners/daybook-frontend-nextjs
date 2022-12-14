@@ -32,7 +32,7 @@ export default function Home() {
   const [calendar, setCalendar] = useState<MergedCalendar[]>([]);
 
   const { data, isValidating } = useFetcher<RetrieveDiaries>({
-    url: `api/v1/diaries?year=${year}&month=${String(month).padStart(2, "0")}`,
+    url: `/api/v1/diaries?year=${year}&month=${String(month).padStart(2, "0")}`,
   });
 
   const memoizedCalendar = useMemo(
@@ -51,8 +51,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (data?.data.ok) {
-      const { diaries } = data.data.data;
+    if (data?.ok) {
+      const { diaries } = data.data;
       if (Array.isArray(diaries)) {
         const parsedCalendar = memoizedCalendar.map((date, i) => {
           if (date.month !== month) return { client: date };
@@ -67,7 +67,13 @@ export default function Home() {
   // Handler.
   const onDateClick = (date: MergedCalendar) => {
     if (!date.server?.day) return;
-    router.push(`/diaries/${date.server?.day}`);
+
+    const query = new URLSearchParams();
+    query.append("year", year + "");
+    query.append("month", date.client.month.toString().padStart(2, "0"));
+    query.append("day", date.client.date.toString().padStart(2, "0"));
+
+    router.push(`/diaries/retrieve?${query.toString()}`);
   };
 
   const onLeftClick = () => {
