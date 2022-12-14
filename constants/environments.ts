@@ -1,3 +1,12 @@
+interface MetaData {
+  title: string;
+  description: string;
+}
+
+interface MetaType {
+  [key: string]: MetaData;
+}
+
 export const Environments = {
   BaseOrigin: process.env.NEXT_PUBLIC_BASE_ORIGIN,
 } as const;
@@ -15,4 +24,4 @@ export const Meta = {
     title: "회원가입 페이지",
     description: "회원가입을 완료하고 일기를 작성해보세요!",
   },
-} as const;
+} as MetaType;
